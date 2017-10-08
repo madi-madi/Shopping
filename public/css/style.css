@@ -1,0 +1,174 @@
+
+section.header .container-fluid
+{
+	margin: 0;
+	padding: 0;
+	background: url('shopping-main.png')
+	no-repeat center center;
+	    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+    -webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+    overflow: hidden;
+    margin-bottom: 100px;
+}
+
+section.header .container-fluid h1
+{
+	margin: auto;
+	padding: 200px ;
+	text-align: center;
+	color: #fff;
+	
+}
+
+/* nav bar */
+
+.navbar{
+	margin-bottom: 0;
+	position: fixed;
+	left: 0;
+	right: 0;
+}
+.navbar img
+{
+	width: 50px;
+	height: 50px;
+	display: inline-block;
+	margin: -12px;
+}
+
+
+/*    */
+
+nav i.fa.fa-shopping-cart.fa-lg ,
+sup
+
+{
+    color: #4cef4c;
+}
+
+.badge
+{
+	background-color: #85c13c;
+}
+
+
+/* Download  */
+
+.download
+{
+	margin-top: 10%;
+}
+
+.dowload-all {
+    margin-bottom: 4%;
+}
+
+
+/** login */
+
+.login
+{
+	margin-top: 10%;
+}
+
+
+
+
+/** Register **/
+.register
+{
+	margin-top: 8%;
+}
+.register .panel-body
+ {
+  
+    margin-top: 20px;
+}
+ul.nav.navbar-nav.navbar-right li {
+    border-bottom: 2px solid #fff;
+    margin: 0 5px;
+}
+
+ul.nav.navbar-nav.navbar-right li:hover ,
+ul.nav.navbar-nav.navbar-right li:active
+ {
+    border-bottom: 2px solid #063106;
+    
+}
+
+
+/**main ***/
+
+.btn-success {
+    color: #fff;
+    background-color: #4cef4c;
+    border-color: #4cef4c;
+}
+
+.remove{
+	background-color: #9ae49a;
+}
+
+
+/** Home **/
+
+.home
+{
+	padding-top: 11%;
+}
+
+.thumbnail .caption b {
+    font-size: 22px;
+}
+
+
+/** Style **/
+
+.col-xs-12.text-center.footer {
+    background-color: #e2e1dc;
+    /* padding: 1.5% 0; */
+    font-weight: bold;
+    font-size: large;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+
+/****/
+
+.col-xs-3.text-center.facebook,
+.col-xs-3.text-center.google ,
+.col-xs-3.text-center.twitter ,
+.col-xs-3.text-center.linkedin
+
+ {
+    color: #fff;
+}
+
+.social .col-xs-3.facebook
+{
+	background-color: #3b5998;
+}
+
+.social .google{background-color:#ea4335;}
+.social  .linkedin{background-color:#0177b5;}
+.social  .twitter{background-color:#2ba8e0;}
+
+
+/**  cart **/
+
+.cart
+{
+	padding-top: 10%;
+}
+
+
+span.badge.num {
+    margin-right: 4%;
+}
