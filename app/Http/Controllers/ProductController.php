@@ -242,9 +242,10 @@ if ($response->isSuccessful()) {
   public function getCheckout_Stripe(Request $request)
     {
 
-     dd($request);
+    // dd($request);
 
-
+      $token = $request->stripeToken;
+//dd($token);
 $formData = array( 'number' =>input::get('cardnumber'),
                    'expiryMonth' => input::get('exp-date'),
                    'expiryYear' => '2018',
@@ -252,18 +253,19 @@ $formData = array( 'number' =>input::get('cardnumber'),
                   );
      // dd($formData);
 
-  $token=$request->input('token_input_stripe');
+ // $token=$request->input('token_input_stripe');
 //dd($token);
 
   $params = array(
            "amount" => input::get('pay').'.00',
              "currency" => "usd",
+              "customer" => Auth::user()->id,
              "description" => "Example charge",
               "source" => $token,
                 // 'card' => $formData
                  //'source'=> $token=$request->input('_token'),
                  );
-  //dd($params);
+//  dd($params);
   $gateway = Omnipay::create('Stripe');
 
 $gateway->setApiKey('sk_test_brOC7dZppS1KosPkGThkedGS');
@@ -275,13 +277,17 @@ $gateway->setTestMode(true);
 if ($response->isSuccessful()) {
     // redirect to offsite payment gateway
   //
-  return  redirect()->route('home');
+ // echo "string";
+  return  redirect()->route('getDone');
+  
 } elseif ($response->isRedirect()) {
     // payment was successful: update database
-    print_r($response);
+   // print_r($response);
 } else {
     // payment failed: display message to customer
-    echo $response->getMessage();
+    //echo $response->getMessage();
+  //echo "Here";
+  
 
 }
     }
@@ -366,7 +372,7 @@ if ($response->isSuccessful()) {
 
         }
 
-        if (!is_null($invoice)) {
+        if (is_null($invoice)) {
         
     $user = Auth::user();
    // $user->email

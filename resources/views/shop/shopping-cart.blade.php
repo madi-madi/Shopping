@@ -49,7 +49,21 @@
 			</form>
 			<div class="col-xs-3 col-md-offset-1 ">
 
-				<button type="" class="btn btn-info stripe" style="background:#0177b5"><sup style="color:#fff;">$</sup> Stripe </button>
+<form action="{{url('/checkout')}}" method="POST">
+
+{{ csrf_field() }}
+<input type="hidden" name="pay" value="{{$count}}">
+  <script
+    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key="pk_test_xNM4darzR77Ku1cftYXILDcE"
+    data-amount="{{$count.'00'}}"
+    data-name="Stripe.com"
+    data-description="Widget"
+    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+    data-locale="auto"
+    data-zip-code="true">
+  </script>
+</form>
 </div>
 			 
 		@else
@@ -66,53 +80,7 @@
 
 @section('footer')
 
-<!-- Stripe-->
-<div class="fix-stripe">
-<div class="form-stripe  col-md-5" style="background: #e6ebf1;">
-	
 
-<!-- Non visible scripts in the example page -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/caret/1.0.0/jquery.caret.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mobilephonenumber/1.0.7/jquery.mobilePhoneNumber.min.js"></script>
-
-  <script src="https://js.stripe.com/v3/"></script>
-<form action="{{url('/checkout')}}" method="post">
-{{ csrf_field() }}
-<input type="hidden" name="pay" value="{{$count}}">
-  <div class="group">
-    <label>
-      <span>Name</span>
-      <input name="cardholder-name" class="field" placeholder="Jane Doe" />
-    </label>
-    <label>
-      <span>Phone</span>
-      <input class="field" placeholder="(123) 456-7890" type="tel" />
-    </label>
-  </div>
-  <div class="group">
-    <label>
-
-      <span>Card</span>
-      <div id="card-element" class="field"></div>
-    </label>
-  </div>
-  <button type="submit" class="pay">Pay {{$count}} $</button>
-  <div class="outcome">
-    <div class="error" role="alert"></div>
-    <div class="success">
-      Success! Your Stripe token is <span class="token"></span>
-     
-
-    </div>
-  </div>
-   <input type="hidden" name="token_input_stripe"  class="token_input" value="">
-  	
-</form>
-
-</div>
-</div>
-<!-- End form Stripe -->
 
 
  <div class="not">
