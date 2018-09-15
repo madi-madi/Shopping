@@ -19,14 +19,16 @@
         <h3>{{$product->title}}</h3>
         <p>{{$product->description}}</p>
          <a class="pull-left"><b>{{$product->price}}<sup>$</sup></b></a>
-         @if(array_search($product->id , explode(',' , Cookie::get('product'))) === false)
-         <a href="{{url('/add-cart/'.$product->id)}}"  class="btn btn-success pull-right  " id ="{{$product->id}}" role="button">
+         <div id="product">
+         @if(array_search($product->id , explode(',' , Cookie::get('product'))) === false )
+         <a   class="btn btn-success pull-right id " id ="{{$product->id}}" role="button">
           <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i> Add to cart</a>
           @else
-          <a  href="{{url('/remove-cart/'.$product->id)}}" class="btn btn-success pull-right remove"
+          <a   class="btn btn-success pull-right remove"
            id ="{{$product->id}}" role="button">
           <i class="fa fa-shopping-cart fa-lg " aria-hidden="true"></i> remove cart</a>
           @endif
+         </div>
                <!--   <a href="{{url('/add-cart/'.$product->id)}}" class="btn btn-success pull-right"
          role="button">Add to cart</a>  -->
        
@@ -45,35 +47,40 @@
 
 
 @section('footer')
+
 <script type="text/javascript">
-  
+
+ 
   $(function(){
 
     $('.id').click(function(){
       //e.preventDefault();
-     // var _token = $('input[name="_token"]').val();
       var product_id = $(this).attr('id');
-     // var data = new FormData();
-//alert(product_id);
-     // data.append('_token' , _token);
-
-      $.get('/add-cart',{id : product_id,  } , function(msg){
-                      $('#total').text(msg['tot']);
+      $.get('/add-cart',{id : product_id,  } , function(data){
+      //  alert(data['msg']);
+       $('#total').text(data['msg']);
 
      });
 
+
     });
    
-   /* $.ajax({
 
-      url  : {{url('/add-cart/id')}},
-      type :"GET",
-      data :data,
-      contentType : "multipart/form-data",
-      proccessData : false ,
+       $('.remove').click(function(){
+      //e.preventDefault();
+      var product_id = $(this).attr('id');
+      $.get('/remove-cart',{id : product_id,  } , function(data){
+      
+        $('#total').text(data['msg']);
+        
+        
+      // $('#total').text(data['remove']);
 
-    });*/
-//console.log(data);
+     });
+
+
+    });
+ 
     
 
   });    

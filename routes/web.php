@@ -29,7 +29,7 @@ Route::group(['middleware' => ['web','auth']], function () {
 	
 	//Route::post('add/cart/{id}', 'InvoiceController@store');
     Route::get('payPremium', ['as'=>'payPremium','uses'=>'ProductController@payPremium']);
-    Route::get('shopping-cart-all', 'PaypalController@show');
+    Route::get('shopping-cart-all', 'ProductController@show');
     Route::post('getCheckout', ['as'=>'getCheckout','uses'=>'ProductController@getCheckout_Paypal']);
     Route::post('/checkout','ProductController@getCheckout_Stripe');
     Route::get('getDone', ['as'=>'getDone','uses'=>'ProductController@getDone']);

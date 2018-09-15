@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container cart">
+
 @if(Cookie::has('product')||Session::has('product'))
 	<div class="row content-cart">
 		<div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
@@ -14,7 +15,7 @@
            id ="{{$product->id}}" role="button" >
           <i class="fa fa-window-close fa-lg" aria-hidden="true"></i></a>
 			 		
-			 	<span class="badge num">{{count($product->id)}}</span>
+			 	{{-- <span class="badge num">{{count($product->id)}}</span> --}}
 			 	<strong class=""> {{$product->title}}</strong>
 			 	<span class="label label-success">{{$product->price}}$</span>
 			 	</li>
@@ -65,19 +66,6 @@
   </script>
 </form>
 </div>
-			 
-		@else
-				<div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
-			<strong> No Item in Cart !!</strong>
-		</div>
-	</div>
-@endif
-
-</div>
-
-
-@endsection
-
 @section('footer')
 
 
@@ -85,7 +73,7 @@
 
  <div class="not">
     <div class="col-md-3 notif text-center" >
-    	<div class="text-center"><i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i></div>
+      <div class="text-center"><i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i></div>
 
       <div class="text-center"> Are you sure Delete ? </div>
 <div >
@@ -109,8 +97,8 @@
      $('.notif').css({"display":"block","transform": "translate(-50%,-100%)"});
      $('.notif').animate({ top:'170px'},70);
       $('.yes').click(function(){
-      			//if (jQuery(this).data('clicked',true)) {}
-     	      $.get('/remove-cart',{id : product_id,  } , function(data){
+            //if (jQuery(this).data('clicked',true)) {}
+            $.get('/remove-cart',{id : product_id,  } , function(data){
         //alert(data['count']);
         $('#total').text(data['remove']);
         $('#total-price').text(data['count']);
@@ -118,11 +106,11 @@
 
 
      });
-     	      $('.notif').css({"display": "none"});
-     	      $('.not').css({"position":"", "z-index":"","background-color": ""});
-     	      //$(this).parent()
-     	     // alert('#'+product_id);
-     	      $('#'+product_id).parent().fadeOut( 1600).remove();
+            $('.notif').css({"display": "none"});
+            $('.not').css({"position":"", "z-index":"","background-color": ""});
+            //$(this).parent()
+           // alert('#'+product_id);
+            $('#'+product_id).parent().fadeOut( 1600).remove();
 
      });
 
@@ -130,13 +118,13 @@
 
 
     // if ($('.yes').data('clicked', true)){
-     	//alert('yes');
-     	
+      //alert('yes');
+      
   //   }
 
             $('.no').click(function(){
-      	$('.notif').css({"display": "none"});
-      	$('.not').css({"position":"", "z-index":"","background-color": ""});
+        $('.notif').css({"display": "none"});
+        $('.not').css({"position":"", "z-index":"","background-color": ""});
       });
   
      // $(this).parent().remove();
@@ -234,3 +222,17 @@ function stripeTokenHandler(token) {
 
 
 @endsection
+			 
+		@else
+				<div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+			<strong> No Item in Cart !!</strong>
+		</div>
+	</div>
+@endif
+
+</div>
+
+
+
+@endsection
+

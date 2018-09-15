@@ -175,31 +175,32 @@ class ProductController extends Controller
 
     public function showCart(){
 
-      $productCookie = Cookie::get('product');
-      $array = explode(',', $productCookie);
+    $productCookie = Cookie::get('product');
+    $array = explode(',', $productCookie);
 
-      //dd($array);
-      $arrayProduct = array();
-      $arrayPrice = array();
-      foreach ($array as $value) {
-        $productValue = Product::where('id' , $value)->get();
-       // dd($productValue)->;
-       $arrayProduct[] = $productValue;
-       $arrayProduct= array_flatten($arrayProduct);
-       //dd($arrayProduct[]);
-      
-      }
-      $count = NULL;
-        foreach ($arrayProduct as $value) {
-          # code...
+    //dd($array);
+    $arrayProduct = array();
+    $arrayPrice = array();
+    foreach ($array as $value) {
+    $productValue = Product::where('id' , $value)->get();
+    // dd($productValue)->;
+    $arrayProduct[] = $productValue;
+    $arrayProduct= array_flatten($arrayProduct);
+    //dd($arrayProduct[]);
 
-          $count +=$value->price;
+    }
+    $count = NULL;
+    foreach ($arrayProduct as $value) {
+    # code...
 
-        }
+    $count +=$value->price;
 
-   //dd($count);
-    return response()->view('shop.shopping-cart' , compact('arrayProduct','count'));
-      return view('shop.shopping-cart' , compact('arrayProduct'));
+    }
+    // dd($arrayProduct);
+
+    //dd($count);
+    return view('shop.shopping-cart' , compact('arrayProduct','count'));
+    // return view('shop.shopping-cart' , compact('arrayProduct'));
     }
 
     /*  Payment   */
@@ -209,87 +210,87 @@ class ProductController extends Controller
     public function getCheckout_Paypal(Request $request)
     {
 
-            $params = array( 
-            'cancelUrl' => 'http://127.0.0.1:8000', 
-            'returnUrl' => route('getDone'),  
-            'amount' =>input::get('pay').'.00', 
-            'currency' => 'USD'
-            ); 
-$gateway = Omnipay::create('PayPal_Express');
-$gateway->setUsername('ibrahim.s.m.2016.k-facilitator_api1.gmail.com');
-$gateway->setPassword('8F55STJV7VBCZHGU');
-$gateway->setSignature('AFcWxV21C7fd0v3bYYYRCpSSRl31Aa-HGpH14p1y6TsHpGYaxnkn0JTh');
- $gateway->setTestMode(true);
- //$gateway->getDefaultParameters();
-$response = $gateway->purchase($params)->send();
-//dd(array_collapse($response));
+      $params = array( 
+      'cancelUrl' => 'http://127.0.0.1:8000', 
+      'returnUrl' => route('getDone'),  
+      'amount' =>input::get('pay').'.00', 
+      'currency' => 'USD'
+      ); 
+      $gateway = Omnipay::create('PayPal_Express');
+      $gateway->setUsername('ibrahim.s.m.2016.k-facilitator_api1.gmail.com');
+      $gateway->setPassword('8F55STJV7VBCZHGU');
+      $gateway->setSignature('AFcWxV21C7fd0v3bYYYRCpSSRl31Aa-HGpH14p1y6TsHpGYaxnkn0JTh');
+      $gateway->setTestMode(true);
+      //$gateway->getDefaultParameters();
+      $response = $gateway->purchase($params)->send();
+      //dd(array_collapse($response));
 
 
-if ($response->isSuccessful()) {
-    // redirect to offsite payment gateway
-    print_r($response);  
-   
-} elseif ($response->isRedirect()) {
-    // payment was successful: update database
-     $response->redirect()->back();
-} else {
-    // payment failed: display message to customer
-    echo $response->getMessage();
+      if ($response->isSuccessful()) {
+      // redirect to offsite payment gateway
+      print_r($response);  
 
-}
+      } elseif ($response->isRedirect()) {
+      // payment was successful: update database
+      $response->redirect()->back();
+      } else {
+      // payment failed: display message to customer
+      echo $response->getMessage();
+
+      }
     }
 
   public function getCheckout_Stripe(Request $request)
     {
 
-    // dd($request);
+        // dd($request);
 
-      $token = $request->stripeToken;
-//dd($token);
-$formData = array( 'number' =>input::get('cardnumber'),
-                   'expiryMonth' => input::get('exp-date'),
-                   'expiryYear' => '2018',
-                   'cvv' => '123'
-                  );
-     // dd($formData);
+        $token = $request->stripeToken;
+        //dd($token);
+        $formData = array( 'number' =>input::get('cardnumber'),
+        'expiryMonth' => input::get('exp-date'),
+        'expiryYear' => '2018',
+        'cvv' => '123'
+        );
+        // dd($formData);
 
- // $token=$request->input('token_input_stripe');
-//dd($token);
+        // $token=$request->input('token_input_stripe');
+        //dd($token);
 
-  $params = array(
-           "amount" => input::get('pay').'.00',
-             "currency" => "usd",
-              "customer" => Auth::user()->id,
-             "description" => "Example charge",
-              "source" => $token,
-                // 'card' => $formData
-                 //'source'=> $token=$request->input('_token'),
-                 );
-//  dd($params);
-  $gateway = Omnipay::create('Stripe');
+        $params = array(
+        "amount" => input::get('pay').'.00',
+        "currency" => "usd",
+        "customer" => Auth::user()->id,
+        "description" => "Example charge",
+        "source" => $token,
+        // 'card' => $formData
+        //'source'=> $token=$request->input('_token'),
+        );
+        //  dd($params);
+        $gateway = Omnipay::create('Stripe');
 
-$gateway->setApiKey('sk_test_brOC7dZppS1KosPkGThkedGS');
-$gateway->setTestMode(true);
-//dd($gateway);
+        $gateway->setApiKey('sk_test_brOC7dZppS1KosPkGThkedGS');
+        $gateway->setTestMode(true);
+        //dd($gateway);
 
-    $response = $gateway->purchase($params)->send();
-//dd($response);
-if ($response->isSuccessful()) {
-    // redirect to offsite payment gateway
-  //
- // echo "string";
-  return  redirect()->route('getDone');
-  
-} elseif ($response->isRedirect()) {
-    // payment was successful: update database
-   // print_r($response);
-} else {
-    // payment failed: display message to customer
-    //echo $response->getMessage();
-  //echo "Here";
-  
+        $response = $gateway->purchase($params)->send();
+        //dd($response);
+        if ($response->isSuccessful()) {
+        // redirect to offsite payment gateway
+        //
+        // echo "string";
+        return  redirect()->route('getDone');
 
-}
+        } elseif ($response->isRedirect()) {
+        // payment was successful: update database
+        // print_r($response);
+        } else {
+        // payment failed: display message to customer
+        //echo $response->getMessage();
+        //echo "Here";
+
+
+        }
     }
 
 

@@ -202,6 +202,12 @@ label > span {
   font-size: 13px;
 }
 
+/*footer {
+    position: absolute;
+    bottom: 0;
+    left: 12%;
+}*/
+
 
   </style>
 
